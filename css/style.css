@@ -29,3 +29,9 @@ body {
 .close:hover {
   cursor: pointer;
 }
+
+
+.tries {
+  color: #ff4545;
+  font-size: 30px;
+}

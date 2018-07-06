@@ -1,3 +1,5 @@
+let counter = 0;
+
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
     // Variables applied to each of our instances go here,
@@ -28,6 +30,7 @@ Enemy.prototype.update = function(dt) {
     let width = Math.abs(player.x - this.x);
     let height = Math.abs(player.y - this.y);
     if (width <= 50 && height <= 50) {
+      displayNumberOfTries();
       resetPlayer();
     }
 };
@@ -56,10 +59,13 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(key) {
+    let tries = document.querySelector('.tries');
     if((this.y >= 0 && this.y <= 25) && (this.x >= 0 ||this.x <= 370))
     {
       displayWinPopup();
       resetPlayer();
+      counter = 0;
+      tries.textContent = "Number of Tries: " + counter;
     }
     else if(key == 'left' && this.x >= 0)
     {
@@ -89,6 +95,12 @@ function displayWinPopup() {
       popup.style.display = "none";
     });
 };
+
+function displayNumberOfTries() {
+  let tries = document.querySelector('.tries');
+  counter++;
+  tries.textContent = "Number of Tries: " + counter;
+}
 
 function resetPlayer() {
   player = new Player(210, 450, 40);
