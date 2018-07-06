@@ -17,14 +17,19 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    this.x = this.x + (this.speed * dt);
 
-    if(this.x >= 550)
-    {
+    this.x = this.x + (this.speed * dt);
+    //console.log("enemy speed: " + this.x);
+
+    if(this.x >= 550) {
       this.x = 0;
     }
 
-
+    let width = Math.abs(player.x - this.x);
+    let height = Math.abs(player.y - this.y);
+    if (width <= 50 && height <= 50) {
+      resetPlayer();
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -36,55 +41,78 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function(x,y,speed) {
-  this.sprite = 'images/char-boy.png';
-  this.x = x;
-  this.y = y;
-  this.speed = speed;
+    this.sprite = 'images/char-boy.png';
+    this.x = x;
+    this.y = y;
+    this.speed = speed;
 };
 
 Player.prototype.update = function(dt) {
-  //this.x += this.speed * dt;
+
 };
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
 Player.prototype.handleInput = function(key) {
-  if(key == 'left' && this.x >= 0)
-  {
-    this.x = this.x - (this.speed + 20);
-  }
-  else if(key == 'up' && this.y >= 0)
-  {
-    this.y = this.y - (this.speed + 20);
-  }
-  else if(key == 'right' && this.x <= 380)
-  {
-    this.x = this.x + (this.speed + 20);
-  }
-  else if(key == 'down' && this.y <= 400)
-  {
-    this.y = this.y + (this.speed + 20);
-  }
+    if((this.y >= 0 && this.y <= 25) && (this.x >= 0 ||this.x <= 370))
+    {
+      displayWinPopup();
+      resetPlayer();
+    }
+    else if(key == 'left' && this.x >= 0)
+    {
+      this.x = this.x - (this.speed);
+    }
+    else if(key == 'up' && this.y >= 0)
+    {
+      this.y = this.y - (this.speed);
+    }
+    else if(key == 'right' && this.x <= 380)
+    {
+      this.x = this.x + (this.speed);
+    }
+    else if(key == 'down' && this.y <= 400)
+    {
+      this.y = this.y + (this.speed);
+    }
 };
 
+function displayWinPopup() {
+    let popup = document.querySelector('.win-popup-modal');
+    let close = document.querySelector('.close');
+
+    popup.style.display = "inline";
+
+    close.addEventListener('click',function() {
+      popup.style.display = "none";
+    });
+};
+
+function resetPlayer() {
+  player = new Player(210, 450, 40);
+}
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
 
-let enemySpot = [40,145,230];
+let enemy1 = new Enemy(0,50,50);
+let enemy2 = new Enemy(200,50,50);
+let enemy3 = new Enemy(0,130,100);
+let enemy4 = new Enemy(0,210,150);
+let enemy5 = new Enemy(210,210,150);
 
-let enemy;
+let enemyArray = [enemy1,enemy2,enemy3,enemy4,enemy5];
 
+for(let i = 0; i < 5; i++)
+{
+  allEnemies.push(enemyArray[i]);
+}
 
-enemySpot.forEach(function(location) {
-  enemy = new Enemy(0,location,100);
-  allEnemies.push(enemy);
-});
-
-let player = new Player(250, 303, 50);
+let player = new Player(210, 450, 40);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
