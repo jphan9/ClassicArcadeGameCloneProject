@@ -60,27 +60,22 @@ Player.prototype.handleInput = function(key) {
     let tries = document.querySelector('.tries');
 
     // Displays the popup win modal, resets the player and counter when win condition is met.
-    if((this.y >= 0 && this.y <= 25) && (this.x >= 0 ||this.x <= 370))
-    {
+    if((this.y >= 0 && this.y <= 25) && (this.x >= 0 ||this.x <= 370)) {
       this.displayWinPopup();
       this.resetPlayer();
       this.counter = 0;
       tries.textContent = "Number of Tries: " + this.counter;
     }
-    else if(key == 'left' && this.x >= 0)
-    {
+    else if(key == 'left' && this.x >= 0) {
       this.x = this.x - (this.speed);
     }
-    else if(key == 'up' && this.y >= 0)
-    {
+    else if(key == 'up' && this.y >= 0) {
       this.y = this.y - (this.speed);
     }
-    else if(key == 'right' && this.x <= 380)
-    {
+    else if(key == 'right' && this.x <= 380) {
       this.x = this.x + (this.speed);
     }
-    else if(key == 'down' && this.y <= 400)
-    {
+    else if(key == 'down' && this.y <= 400) {
       this.y = this.y + (this.speed);
     }
 };
@@ -124,8 +119,7 @@ let enemy5 = new Enemy(210,210,150);
 
 let enemyArray = [enemy1,enemy2,enemy3,enemy4,enemy5];
 
-for(let i = 0; i < 5; i++)
-{
+for(let i = 0; i < 5; i++) {
   allEnemies.push(enemyArray[i]);
 }
 
