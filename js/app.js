@@ -19,12 +19,13 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 
     this.x = this.x + (this.speed * dt);
-    //console.log("enemy speed: " + this.x);
 
+    // Resets the position of the enemies after they have gone off the canvas.
     if(this.x >= 550) {
       this.x = 0;
     }
 
+    // Handles the collision detection.
     let width = Math.abs(player.x - this.x);
     let height = Math.abs(player.y - this.y);
     if (width <= 50 && height <= 50) {
@@ -88,7 +89,7 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-// Function that displays a win popup modal.
+// Displays a win popup modal.
 Player.prototype.displayWinPopup = function() {
     let popup = document.querySelector('.win-popup-modal');
     let close = document.querySelector('.close');
@@ -102,17 +103,17 @@ Player.prototype.displayWinPopup = function() {
 
 // Displays the number of tries that the player has attempted.
 Player.prototype.displayNumberOfTries = function() {
-  let tries = document.querySelector('.tries');
-  this.counter++;
-  console.log(this.counter);
-  tries.textContent = "Number of Tries: " + this.counter;
+    let tries = document.querySelector('.tries');
+    this.counter++;
+    console.log(this.counter);
+    tries.textContent = "Number of Tries: " + this.counter;
 };
 
 
 // Resets the player position.
 Player.prototype.resetPlayer = function() {
-  this.x = 210;
-  this.y = 450;
+    this.x = 210;
+    this.y = 450;
 };
 
 // Now instantiate your objects.
