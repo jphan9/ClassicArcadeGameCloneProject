@@ -1,5 +1,3 @@
-let counter = 0;
-
 // Enemies our player must avoid
 var Enemy = function(x,y,speed) {
     // Variables applied to each of our instances go here,
@@ -30,8 +28,9 @@ Enemy.prototype.update = function(dt) {
     let width = Math.abs(player.x - this.x);
     let height = Math.abs(player.y - this.y);
     if (width <= 50 && height <= 50) {
-      displayNumberOfTries();
-      resetPlayer();
+      player.displayNumberOfTries();
+      //console.log(player.displayNumberOfTries());
+      player.resetPlayer();
     }
 };
 
@@ -48,6 +47,7 @@ var Player = function(x,y,speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
+    this.counter = 0;
 };
 
 Player.prototype.update = function(dt) {
@@ -58,14 +58,17 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+// Handles the player input. Also checks the win condition as well as the boundaries of the canvas.
 Player.prototype.handleInput = function(key) {
     let tries = document.querySelector('.tries');
+
+    // Displays the popup win modal, resets the player and counter when win condition is met.
     if((this.y >= 0 && this.y <= 25) && (this.x >= 0 ||this.x <= 370))
     {
-      displayWinPopup();
-      resetPlayer();
-      counter = 0;
-      tries.textContent = "Number of Tries: " + counter;
+      this.displayWinPopup();
+      this.resetPlayer();
+      this.counter = 0;
+      tries.textContent = "Number of Tries: " + this.counter;
     }
     else if(key == 'left' && this.x >= 0)
     {
@@ -85,7 +88,8 @@ Player.prototype.handleInput = function(key) {
     }
 };
 
-function displayWinPopup() {
+// Function that displays a win popup modal.
+Player.prototype.displayWinPopup = function() {
     let popup = document.querySelector('.win-popup-modal');
     let close = document.querySelector('.close');
 
@@ -96,15 +100,20 @@ function displayWinPopup() {
     });
 };
 
-function displayNumberOfTries() {
+// Displays the number of tries that the player has attempted.
+Player.prototype.displayNumberOfTries = function() {
   let tries = document.querySelector('.tries');
-  counter++;
-  tries.textContent = "Number of Tries: " + counter;
-}
+  this.counter++;
+  console.log(this.counter);
+  tries.textContent = "Number of Tries: " + this.counter;
+};
 
-function resetPlayer() {
-  player = new Player(210, 450, 40);
-}
+
+// Resets the player position.
+Player.prototype.resetPlayer = function() {
+  this.x = 210;
+  this.y = 450;
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
