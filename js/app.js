@@ -30,7 +30,6 @@ Enemy.prototype.update = function(dt) {
     let height = Math.abs(player.y - this.y);
     if (width <= 50 && height <= 50) {
       player.displayNumberOfTries();
-      //console.log(player.displayNumberOfTries());
       player.resetPlayer();
     }
 };
@@ -49,10 +48,6 @@ var Player = function(x,y,speed) {
     this.y = y;
     this.speed = speed;
     this.counter = 0;
-};
-
-Player.prototype.update = function(dt) {
-
 };
 
 Player.prototype.render = function() {
@@ -105,7 +100,6 @@ Player.prototype.displayWinPopup = function() {
 Player.prototype.displayNumberOfTries = function() {
     let tries = document.querySelector('.tries');
     this.counter++;
-    console.log(this.counter);
     tries.textContent = "Number of Tries: " + this.counter;
 };
 
